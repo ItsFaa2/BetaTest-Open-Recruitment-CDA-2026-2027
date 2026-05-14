@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>CDA 2026/2027 - Professional Form System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --bg:rgba(15,23,42,.55);
+    --card:rgba(17,24,39,.55);
+    --input:rgba(30,41,59,.55);
+    --border:rgba(255,255,255,.08);
+
+    --green:#22c55e;
+    --green2:#16a34a;
+
+    --white:#ffffff;
+    --gray:#94a3b8;
+
+    --danger:#ef4444;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:
+        linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
+        url('./assets/background.jpg');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    min-height:100vh;
+    padding:40px 20px;
+    color:var(--white);
+}
+
+.container{
+    width:100%;
+    max-width:950px;
+    margin:auto;
+}
+
+.top-card{
+    background:var(--card);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:24px;
+    overflow:hidden;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+}
+
+.header{
+    padding:40px;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.header h1{
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.header p{
+    color:var(--gray);
+    line-height:1.7;
+}
+
+.info-grid{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+}
+
+.info-box{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:16px;
+    padding:18px;
+}
+
+.info-box span{
+    display:block;
+    color:var(--gray);
+    font-size:13px;
+    margin-bottom:6px;
+}
+
+.progress-wrapper{
+    padding:0 40px;
+    margin-top:25px;
+}
+
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+    font-size:14px;
+    color:var(--gray);
+}
+
+.progress{
+    width:100%;
+    height:10px;
+    background:#1e293b;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:50%;
+    height:100%;
+    background:linear-gradient(90deg,var(--green),var(--green2));
+    transition:.35s ease;
+}
+
+.form-section{
+    padding:40px;
+    display:none;
+}
+
+.form-section.active{
+    display:block;
+}
+
+.section-title{
+    margin-bottom:30px;
+}
+
+.section-title h2{
+    font-size:24px;
+    margin-bottom:8px;
+}
+
+.section-title p{
+    color:var(--gray);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+label{
+    display:block;
+    margin-bottom:10px;
+    font-size:14px;
+    font-weight:500;
+}
+
+.required{
+    color:var(--danger);
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    border:none;
+    outline:none;
+    background:var(--input);
+    border:1px solid transparent;
+    color:white;
+    padding:15px 16px;
+    border-radius:14px;
+    font-size:14px;
+    transition:.25s;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--green);
+    box-shadow:0 0 0 4px rgba(34,197,94,.12);
+}
+
+textarea{
+    resize:vertical;
+    min-height:130px;
+}
+
+.radio-group{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.radio-item{
+    flex:1;
+    min-width:150px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--input);
+    border-radius:14px;
+    padding:15px;
+    border:1px solid transparent;
+    cursor:pointer;
+}
+
+.radio-item:hover{
+    border-color:var(--green);
+}
+
+.radio-item input{
+    width:auto;
+}
+
+.action{
+    display:flex;
+    gap:15px;
+    margin-top:35px;
+}
+
+button{
+    flex:1;
+    border:none;
+    padding:16px;
+    border-radius:16px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.btn-prev{
+    background:#374151;
+    color:white;
+}
+
+.btn-next,
+.btn-submit{
+    background:linear-gradient(135deg,var(--green),var(--green2));
+    color:white;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.loading{
+    display:none;
+    text-align:center;
+    padding:30px;
+    color:var(--gray);
+}
+
+.success{
+    display:none;
+    text-align:center;
+    padding:60px 40px;
+}
+
+.success h2{
+    font-size:38px;
+    color:var(--green);
+    margin-bottom:14px;
+}
+
+.success p{
+    color:var(--gray);
+    line-height:1.8;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:20px;
+    background:rgba(34,197,94,.15);
+    color:#4ade80;
+    padding:12px 18px;
+    border-radius:999px;
+    font-size:14px;
+}
+
+@media(max-width:768px){
+
+    .header,
+    .form-section{
+        padding:25px;
+    }
+
+    .action{
+        flex-direction:column;
+    }
+
+    .header h1{
+        font-size:26px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top-card">
+
+        <div class="header">
+
+            <h1>Pendaftaran CDA 2026/2027</h1>
+
+            <p>
+                Sistem Pendaftaran Profesional Calon Dewan Ambalan
+                SMK N 1 Rembang
+            </p>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+                    <span>Status</span>
+                    Dibuka
+                </div>
+
+                <div class="info-box">
+                    <span>Tahun</span>
+                    2026 / 2027
+                </div>
+
+                <div class="info-box">
+                    <span>Sistem</span>
+                    Online Registration
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="progress-wrapper">
+
+            <div class="progress-top">
+                <span>Progress Form</span>
+                <span id="progressText">50%</span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+        </div>
+
+        <form id="cdaForm">
+
+            <!-- PAGE 1 -->
+            <div class="form-section active" id="page1">
+
+                <div class="section-title">
+                    <h2>Informasi Pribadi</h2>
+                    <p>Lengkapi data diri dengan benar dan valid.</p>
+                </div>
+
+                <div class="grid">
+
+                    <div class="form-group">
+                        <label>Gmail <span class="required">*</span></label>
+                        <input type="email" id="gmail" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nama Lengkap <span class="required">*</span></label>
+                        <input type="text" id="nama" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kelas XI.. <span class="required">*</span></label>
+                        <input type="text" id="kelas" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tanggal Lahir <span class="required">*</span></label>
+                        <input type="date" id="tanggal_lahir" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Alamat <span class="required">*</span></label>
+                        <textarea id="alamat" required></textarea>
+                    </div>
+
+                    <div class="form-group full">
+
+                        <label>Jenis Kelamin <span class="required">*</span></label>
+
+                        <div class="radio-group">
+
+                            <label class="radio-item">
+                                <input type="radio" name="jk" value="Laki - Laki" required>
+                                Laki - Laki
+                            </label>
+
+                            <label class="radio-item">
+                                <input type="radio" name="jk" value="Perempuan">
+                                Perempuan
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Agama <span class="required">*</span></label>
+                        <input type="text" id="agama" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hobi <span class="required">*</span></label>
+                        <input type="text" id="hobi" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nomor Telepon <span class="required">*</span></label>
+                        <input type="tel" id="telepon" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Instagram <span class="required">*</span></label>
+                        <input type="text" id="instagram" required>
+                    </div>
+
+                    <div class="form-group full">
+
+                        <label>Persetujuan Orang Tua <span class="required">*</span></label>
+
+                        <div class="radio-group">
+
+                            <label class="radio-item">
+                                <input type="radio" name="ortu" value="Setuju" required>
+                                Setuju
+                            </label>
+
+                            <label class="radio-item">
+                                <input type="radio" name="ortu" value="Tidak">
+                                Tidak
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="action">
+
+                    <button type="button" class="btn-next" onclick="nextPage()">
+                        Lanjut ke Pertanyaan →
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- PAGE 2 -->
+            <div class="form-section" id="page2">
+
+                <div class="section-title">
+                    <h2>Pertanyaan Seleksi</h2>
+                    <p>Jawablah dengan jujur dan jelas.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Mengapa Anda tertarik menjadi bagian dari Dewan Ambalan?
+                        <span class="required">*</span>
+                    </label>
+
+                    <textarea id="alasan" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Apa visi dan misi Anda untuk Pramuka di SMK N 1 Rembang?
+                    </label>
+
+                    <textarea id="visimisi"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Apakah Anda siap mengikuti segala kegiatan dalam Dewan Ambalan?
+                        <span class="required">*</span>
+                    </label>
+
+                    <textarea id="kesiapan" required></textarea>
+                </div>
+
+                <div class="action">
+
+                    <button type="button" class="btn-prev" onclick="prevPage()">
+                        ← Kembali
+                    </button>
+
+                    <button type="submit" class="btn-submit">
+                        Kirim Pendaftaran
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <div class="loading" id="loadingBox">
+            Mengirim data ke server...
+        </div>
+
+        <div class="success" id="successBox">
+
+            <h2>Pendaftaran Berhasil</h2>
+
+            <p>
+                Data CDA berhasil dikirim ke sistem panitia.<br>
+                Silakan menunggu informasi seleksi berikutnya.
+            </p>
+
+            <div class="badge" id="participantCode">
+                ID Peserta: CDA-2026-0001
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDFfQx4e0zRlJLlHf-cHogtEm78iadKn_aYTkR3j1PVbziIMJXBueBAIkoe49AZoNE4A/exec";
+
+const page1 = document.getElementById('page1');
+const page2 = document.getElementById('page2');
+
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+
+function setProgress(value){
+
+    progressBar.style.width = value + "%";
+    progressText.innerText = value + "%";
+
+}
+
+function nextPage(){
+
+    const requiredInputs = page1.querySelectorAll("[required]");
+
+    for(const input of requiredInputs){
+
+        if(!input.checkValidity()){
+
+            input.reportValidity();
+            return;
+
+        }
+
+    }
+
+    page1.classList.remove('active');
+    page2.classList.add('active');
+
+    setProgress(100);
+
+    window.scrollTo({
+        top:0,
+        behavior:'smooth'
+    });
+
+}
+
+function prevPage(){
+
+    page2.classList.remove('active');
+    page1.classList.add('active');
+
+    setProgress(50);
+
+    window.scrollTo({
+        top:0,
+        behavior:'smooth'
+    });
+
+}
+
+function generateParticipantID(){
+
+    const random = Math.floor(Math.random() * 9000) + 1000;
+
+    return `CDA-2026-${random}`;
+
+}
+
+document.getElementById('cdaForm').addEventListener('submit', async function(e){
+
+    e.preventDefault();
+
+    const participantID = generateParticipantID();
+
+    const data = {
+
+        participant_id: participantID,
+
+        gmail:
+            document.getElementById('gmail').value,
+
+        nama:
+            document.getElementById('nama').value,
+
+        kelas:
+            document.getElementById('kelas').value,
+
+        tanggal_lahir:
+            document.getElementById('tanggal_lahir').value,
+
+        alamat:
+            document.getElementById('alamat').value,
+
+        jenis_kelamin:
+            document.querySelector('input[name="jk"]:checked').value,
+
+        agama:
+            document.getElementById('agama').value,
+
+        hobi:
+            document.getElementById('hobi').value,
+
+        telepon:
+            document.getElementById('telepon').value,
+
+        instagram:
+            document.getElementById('instagram').value,
+
+        persetujuan:
+            document.querySelector('input[name="ortu"]:checked').value,
+
+        alasan:
+            document.getElementById('alasan').value,
+
+        visimisi:
+            document.getElementById('visimisi').value,
+
+        kesiapan:
+            document.getElementById('kesiapan').value
+
+    };
+
+    try{
+
+        document.getElementById('loadingBox').style.display = "block";
+
+        const response = await fetch(GOOGLE_SCRIPT_URL,{
+
+            method:"POST",
+
+            body:JSON.stringify(data)
+
+        });
+
+        const result = await response.json();
+
+        document.getElementById('loadingBox').style.display = "none";
+
+        if(result.status === "success"){
+
+            document.getElementById('cdaForm').style.display = "none";
+
+            document.getElementById('successBox').style.display = "block";
+
+            document.getElementById('participantCode').innerText =
+                "ID Peserta: " + participantID;
+
+        }else{
+
+            alert("Gagal mengirim data!");
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        document.getElementById('loadingBox').style.display = "none";
+
+        alert("Terjadi kesalahan koneksi!");
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
