@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CDA 2026/2027 - Professional Form System</title>
+<title>CDA 2026/2027 - Registration</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
-
-    --bg:rgba(190,220,255,.18);
-
     --card:rgba(220,235,255,.16);
-
     --input:rgba(255,255,255,.10);
-
-    --border:rgba(255,255,255,.35);
-
-    --green:#38bdf8;
-    --green2:#0ea5e9;
-
+    --border:rgba(255,255,255,.18);
+    --blue:#38bdf8;
+    --blue2:#0ea5e9;
     --white:#f8fbff;
     --gray:#dbeafe;
-
     --danger:#ef4444;
+    --success:#4ade80;
 }
 
 *{
@@ -37,24 +29,15 @@
 
 body{
     font-family:'Poppins',sans-serif;
-
     background-color:#020617;
-
     background-image:
-        linear-gradient(
-            rgba(2,6,23,.72),
-            rgba(15,23,42,.88)
-        ),
+        linear-gradient(rgba(2,6,23,.72),rgba(15,23,42,.88)),
         url('./assets/background.jpg');
-
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
-
     min-height:100vh;
-
     padding:40px 20px;
-
     color:var(--white);
 }
 
@@ -65,36 +48,18 @@ body{
 }
 
 .top-card{
-
     background:var(--card);
-
-    border:1px solid rgba(255,255,255,.18);
-
+    border:1px solid var(--border);
     border-radius:24px;
-
     overflow:hidden;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.25);
-
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
     backdrop-filter:blur(20px);
     -webkit-backdrop-filter:blur(20px);
 }
 
-.top-card:hover{
-    transform:translateY(-3px);
-    transition:.3s;
-}
-
 .header{
     padding:40px;
-    background:
-    linear-gradient(
-        135deg,
-        rgba(56,189,248,.18),
-        rgba(37,99,235,.22)
-    );
-    border-bottom:1px solid rgba(255,255,255,.05);
+    background:linear-gradient(135deg,rgba(56,189,248,.18),rgba(37,99,235,.22));
 }
 
 .header h1{
@@ -152,7 +117,7 @@ body{
 .progress-bar{
     width:50%;
     height:100%;
-    background:linear-gradient(90deg,var(--green),var(--green2));
+    background:linear-gradient(90deg,var(--blue),var(--blue2));
     transition:.35s ease;
 }
 
@@ -204,36 +169,21 @@ label{
 }
 
 input,
-textarea,
-select{
-
+textarea{
     width:100%;
-
-    border:none;
     outline:none;
-
     background:rgba(255,255,255,.12);
-
     border:1px solid rgba(255,255,255,.10);
-
     color:white;
-
     padding:15px 16px;
-
     border-radius:14px;
-
     font-size:14px;
-
-    transition:.25s;
 }
 
 input:focus,
-textarea:focus,
-select:focus{
-    border-color:var(--green);
-    box-shadow:
-    0 0 30px rgba(56,189,248,.12),
-    0 20px 60px rgba(0,0,0,.25);
+textarea:focus{
+    border-color:var(--blue);
+    box-shadow:0 0 30px rgba(56,189,248,.12);
 }
 
 textarea{
@@ -261,7 +211,7 @@ textarea{
 }
 
 .radio-item:hover{
-    border-color:var(--green);
+    border-color:var(--blue);
 }
 
 .radio-item input{
@@ -285,6 +235,15 @@ button{
     transition:.25s;
 }
 
+button:hover:not(:disabled){
+    transform:translateY(-2px);
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
 .btn-prev{
     background:#374151;
     color:white;
@@ -292,12 +251,15 @@ button{
 
 .btn-next,
 .btn-submit{
-    background:linear-gradient(135deg,var(--green),var(--green2));
+    background:linear-gradient(135deg,var(--blue),var(--blue2));
     color:white;
 }
 
-button:hover{
-    transform:translateY(-2px);
+.btn-reset{
+    margin-top:20px;
+    background:#475569;
+    color:white;
+    display:none;
 }
 
 .loading{
@@ -315,7 +277,7 @@ button:hover{
 
 .success h2{
     font-size:38px;
-    color:var(--green);
+    color:var(--blue);
     margin-bottom:14px;
 }
 
@@ -328,17 +290,43 @@ button:hover{
     display:inline-block;
     margin-top:20px;
     background:rgba(34,197,94,.15);
-    color:#4ade80;
+    color:var(--success);
     padding:12px 18px;
     border-radius:999px;
     font-size:14px;
 }
 
-@media(max-width:768px){
+.answer-box{
+    margin:22px auto 0;
+    max-width:560px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:18px;
+    padding:18px 20px;
+    color:var(--gray);
+    font-size:14px;
+    line-height:1.8;
+}
 
+.error-box{
+    display:none;
+    margin:20px 40px 0;
+    background:rgba(239,68,68,.15);
+    border:1px solid rgba(239,68,68,.35);
+    color:#fecaca;
+    border-radius:16px;
+    padding:15px;
+    font-size:14px;
+}
+
+@media(max-width:768px){
     .header,
     .form-section{
         padding:25px;
+    }
+
+    .progress-wrapper{
+        padding:0 25px;
     }
 
     .action{
@@ -348,29 +336,20 @@ button:hover{
     .header h1{
         font-size:26px;
     }
-
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="container">
-
     <div class="top-card">
 
         <div class="header">
-
             <h1>Pendaftaran CDA 2026/2027</h1>
-
-            <p>
-                Sistem Pendaftaran Profesional Calon Dewan Ambalan
-                SMK N 1 Rembang
-            </p>
+            <p>Sistem Pendaftaran Profesional Calon Dewan Ambalan SMK N 1 Rembang</p>
 
             <div class="info-grid">
-
                 <div class="info-box">
                     <span>Status</span>
                     Dibuka
@@ -385,13 +364,10 @@ button:hover{
                     <span>Sistem</span>
                     Online Registration
                 </div>
-
             </div>
-
         </div>
 
         <div class="progress-wrapper">
-
             <div class="progress-top">
                 <span>Progress Form</span>
                 <span id="progressText">50%</span>
@@ -400,14 +376,13 @@ button:hover{
             <div class="progress">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
-
         </div>
+
+        <div class="error-box" id="errorBox"></div>
 
         <form id="cdaForm">
 
-            <!-- PAGE 1 -->
             <div class="form-section active" id="page1">
-
                 <div class="section-title">
                     <h2>Informasi Pribadi</h2>
                     <p>Lengkapi data diri dengan benar dan valid.</p>
@@ -441,11 +416,9 @@ button:hover{
                     </div>
 
                     <div class="form-group full">
-
                         <label>Jenis Kelamin <span class="required">*</span></label>
 
                         <div class="radio-group">
-
                             <label class="radio-item">
                                 <input type="radio" name="jk" value="Laki - Laki" required>
                                 Laki - Laki
@@ -455,9 +428,7 @@ button:hover{
                                 <input type="radio" name="jk" value="Perempuan">
                                 Perempuan
                             </label>
-
                         </div>
-
                     </div>
 
                     <div class="form-group">
@@ -481,11 +452,9 @@ button:hover{
                     </div>
 
                     <div class="form-group full">
-
                         <label>Persetujuan Orang Tua <span class="required">*</span></label>
 
                         <div class="radio-group">
-
                             <label class="radio-item">
                                 <input type="radio" name="ortu" value="Setuju" required>
                                 Setuju
@@ -495,69 +464,48 @@ button:hover{
                                 <input type="radio" name="ortu" value="Tidak">
                                 Tidak
                             </label>
-
                         </div>
-
                     </div>
 
                 </div>
 
                 <div class="action">
-
                     <button type="button" class="btn-next" onclick="nextPage()">
                         Lanjut ke Pertanyaan →
                     </button>
-
                 </div>
-
             </div>
 
-            <!-- PAGE 2 -->
             <div class="form-section" id="page2">
-
                 <div class="section-title">
                     <h2>Pertanyaan Seleksi</h2>
                     <p>Jawablah dengan jujur dan jelas.</p>
                 </div>
 
                 <div class="form-group">
-                    <label>
-                        Mengapa Anda tertarik menjadi bagian dari Dewan Ambalan?
-                        <span class="required">*</span>
-                    </label>
-
+                    <label>Mengapa Anda tertarik menjadi bagian dari Dewan Ambalan? <span class="required">*</span></label>
                     <textarea id="alasan" required></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>
-                        Apa visi dan misi Anda untuk Pramuka di SMK N 1 Rembang?
-                    </label>
-
+                    <label>Apa visi dan misi Anda untuk Pramuka di SMK N 1 Rembang?</label>
                     <textarea id="visimisi"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>
-                        Apakah Anda siap mengikuti segala kegiatan dalam Dewan Ambalan?
-                        <span class="required">*</span>
-                    </label>
-
+                    <label>Apakah Anda siap mengikuti segala kegiatan dalam Dewan Ambalan? <span class="required">*</span></label>
                     <textarea id="kesiapan" required></textarea>
                 </div>
 
                 <div class="action">
-
                     <button type="button" class="btn-prev" onclick="prevPage()">
                         ← Kembali
                     </button>
 
-                    <button type="submit" class="btn-submit">
+                    <button type="submit" class="btn-submit" id="submitButton">
                         Kirim Pendaftaran
                     </button>
-
                 </div>
-
             </div>
 
         </form>
@@ -567,7 +515,6 @@ button:hover{
         </div>
 
         <div class="success" id="successBox">
-
             <h2>Pendaftaran Berhasil</h2>
 
             <p>
@@ -575,47 +522,66 @@ button:hover{
                 Silakan menunggu informasi seleksi berikutnya.
             </p>
 
-            <div class="badge" id="participantCode">
-                ID Peserta: CDA-2026-0001
-            </div>
+            <div class="badge" id="participantCode"></div>
 
+            <div class="answer-box" id="answerBox"></div>
+
+            <button type="button" class="btn-reset" id="resetButton" onclick="resetTestingMode()">
+                Reset Testing / Kirim Lagi
+            </button>
         </div>
 
     </div>
-
 </div>
 
 <script>
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9uPC4LzkDrVTTvSpu-Z8OxI9g_x8nCDdTBcaW8vVr9FleoKkBroLm3NR0ixCZ0-N8NA/exec";
+const TEST_MODE = true;
+// false = VERSION A PRODUCTION
+// true  = VERSION B TESTING
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRqpfFWZhNVCdNZJUYkq_xioM7E9G_5m1sqzsKzYKbnA5wKgt4hiFpk65vjm_H3H9b6A/exec";
 
 const page1 = document.getElementById("page1");
 const page2 = document.getElementById("page2");
-
 const progressBar = document.getElementById("progressBar");
 const progressText = document.getElementById("progressText");
-
 const form = document.getElementById("cdaForm");
 const loadingBox = document.getElementById("loadingBox");
 const successBox = document.getElementById("successBox");
 const participantCode = document.getElementById("participantCode");
-
-const submitButton = document.querySelector(".btn-submit");
+const answerBox = document.getElementById("answerBox");
+const errorBox = document.getElementById("errorBox");
+const submitButton = document.getElementById("submitButton");
+const resetButton = document.getElementById("resetButton");
 
 const SUBMIT_LOCK_KEY = "cda_2026_submitted";
 const PARTICIPANT_ID_KEY = "cda_2026_participant_id";
 
 let isSubmitting = false;
 
-function setProgress(value) {
+function setProgress(value){
     progressBar.style.width = value + "%";
     progressText.innerText = value + "%";
 }
 
-function nextPage() {
+function showError(message){
+    errorBox.innerText = message;
+    errorBox.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function clearError(){
+    errorBox.innerText = "";
+    errorBox.style.display = "none";
+}
+
+function nextPage(){
+    clearError();
+
     const requiredInputs = page1.querySelectorAll("[required]");
 
-    for (const input of requiredInputs) {
-        if (!input.checkValidity()) {
+    for(const input of requiredInputs){
+        if(!input.checkValidity()){
             input.reportValidity();
             return;
         }
@@ -624,98 +590,158 @@ function nextPage() {
     page1.classList.remove("active");
     page2.classList.add("active");
     setProgress(100);
-
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function prevPage() {
+function prevPage(){
+    clearError();
+
+    page2.classList.remove("active");
+    page1.classList.add("active");
+    setProgress(50);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function normalizePhone(value){
+    return value.replace(/\D/g, "");
+}
+
+function buildPayload(){
+    const jk = document.querySelector('input[name="jk"]:checked');
+    const ortu = document.querySelector('input[name="ortu"]:checked');
+
+    return {
+        test_mode: TEST_MODE,
+        gmail: document.getElementById("gmail").value.trim().toLowerCase(),
+        nama: document.getElementById("nama").value.trim(),
+        kelas: document.getElementById("kelas").value.trim(),
+        tanggal_lahir: document.getElementById("tanggal_lahir").value,
+        alamat: document.getElementById("alamat").value.trim(),
+        jenis_kelamin: jk ? jk.value : "",
+        agama: document.getElementById("agama").value.trim(),
+        hobi: document.getElementById("hobi").value.trim(),
+        telepon: normalizePhone(document.getElementById("telepon").value),
+        instagram: document.getElementById("instagram").value.trim(),
+        persetujuan: ortu ? ortu.value : "",
+        alasan: document.getElementById("alasan").value.trim(),
+        visimisi: document.getElementById("visimisi").value.trim(),
+        kesiapan: document.getElementById("kesiapan").value.trim()
+    };
+}
+
+function showSuccess(id){
+    form.style.display = "none";
+    loadingBox.style.display = "none";
+    errorBox.style.display = "none";
+    successBox.style.display = "block";
+
+    participantCode.innerText = "ID Peserta: " + id;
+
+    answerBox.innerHTML = `
+        <strong>Catatan Penting:</strong><br>
+        Simpan ID peserta ini baik-baik.<br>
+        Jangan mengirim formulir berulang kali karena sistem akan menolak data duplikat.<br>
+        Informasi seleksi berikutnya akan disampaikan oleh panitia.
+    `;
+
+    resetButton.style.display = TEST_MODE ? "inline-block" : "none";
+}
+
+function resetTestingMode(){
+    if(!TEST_MODE) return;
+
+    localStorage.removeItem(SUBMIT_LOCK_KEY);
+    localStorage.removeItem(PARTICIPANT_ID_KEY);
+
+    form.reset();
+    successBox.style.display = "none";
+    form.style.display = "block";
+
     page2.classList.remove("active");
     page1.classList.add("active");
     setProgress(50);
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    submitButton.disabled = false;
+    submitButton.innerText = "Kirim Pendaftaran";
+    isSubmitting = false;
 }
 
-function generateParticipantID() {
-    const random = Math.floor(Math.random() * 9000) + 1000;
-    return `CDA-2026-${random}`;
-}
+window.addEventListener("DOMContentLoaded", function(){
+    if(TEST_MODE) return;
 
-function showSuccess(id) {
-    form.style.display = "none";
-    loadingBox.style.display = "none";
-    successBox.style.display = "block";
-    participantCode.innerText = "ID Peserta: " + id;
-}
-
-window.addEventListener("DOMContentLoaded", function () {
     const alreadySubmitted = localStorage.getItem(SUBMIT_LOCK_KEY);
     const savedParticipantID = localStorage.getItem(PARTICIPANT_ID_KEY);
 
-    if (alreadySubmitted === "true" && savedParticipantID) {
+    if(alreadySubmitted === "true" && savedParticipantID){
         showSuccess(savedParticipantID);
     }
 });
 
-form.addEventListener("submit", async function (e) {
+form.addEventListener("submit", async function(e){
     e.preventDefault();
+    clearError();
 
-    if (isSubmitting) return;
+    if(isSubmitting) return;
 
-    const alreadySubmitted = localStorage.getItem(SUBMIT_LOCK_KEY);
+    if(!TEST_MODE && localStorage.getItem(SUBMIT_LOCK_KEY) === "true"){
+        const savedParticipantID = localStorage.getItem(PARTICIPANT_ID_KEY);
 
-    if (alreadySubmitted === "true") {
-        alert("Form sudah pernah dikirim dari perangkat ini.");
+        if(savedParticipantID){
+            showSuccess(savedParticipantID);
+            return;
+        }
+
+        showError("Form sudah pernah dikirim dari perangkat ini.");
+        return;
+    }
+
+    if(!form.checkValidity()){
+        form.reportValidity();
         return;
     }
 
     isSubmitting = true;
     submitButton.disabled = true;
     submitButton.innerText = "Mengirim...";
+    loadingBox.style.display = "block";
 
-    const participantID = generateParticipantID();
-
-    const data = {
-        participant_id: participantID,
-        gmail: document.getElementById("gmail").value.trim(),
-        nama: document.getElementById("nama").value.trim(),
-        kelas: document.getElementById("kelas").value.trim(),
-        tanggal_lahir: document.getElementById("tanggal_lahir").value,
-        alamat: document.getElementById("alamat").value.trim(),
-        jenis_kelamin: document.querySelector('input[name="jk"]:checked').value,
-        agama: document.getElementById("agama").value.trim(),
-        hobi: document.getElementById("hobi").value.trim(),
-        telepon: document.getElementById("telepon").value.trim(),
-        instagram: document.getElementById("instagram").value.trim(),
-        persetujuan: document.querySelector('input[name="ortu"]:checked').value,
-        alasan: document.getElementById("alasan").value.trim(),
-        visimisi: document.getElementById("visimisi").value.trim(),
-        kesiapan: document.getElementById("kesiapan").value.trim()
-    };
-
-    try {
-        loadingBox.style.display = "block";
-
+    try{
         const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: "POST",
-            body: JSON.stringify(data)
+            body: JSON.stringify(buildPayload())
         });
 
         const result = await response.json();
 
-        if (result.status === "success") {
-            localStorage.setItem(SUBMIT_LOCK_KEY, "true");
-            localStorage.setItem(PARTICIPANT_ID_KEY, participantID);
+        if(result.status === "success"){
+            if(!TEST_MODE){
+                localStorage.setItem(SUBMIT_LOCK_KEY, "true");
+                localStorage.setItem(PARTICIPANT_ID_KEY, result.participant_id);
+            }
 
-            showSuccess(participantID);
-        } else {
-            throw new Error("Server response bukan success");
+            showSuccess(result.participant_id);
+            return;
         }
-    } catch (error) {
-        console.error(error);
 
+        if(result.status === "duplicate"){
+            if(result.participant_id){
+                if(!TEST_MODE){
+                    localStorage.setItem(SUBMIT_LOCK_KEY, "true");
+                    localStorage.setItem(PARTICIPANT_ID_KEY, result.participant_id);
+                }
+
+                showSuccess(result.participant_id);
+                return;
+            }
+
+            throw new Error(result.message || "Data sudah pernah dikirim.");
+        }
+
+        throw new Error(result.message || "Server error.");
+
+    }catch(error){
         loadingBox.style.display = "none";
-        alert("Terjadi kesalahan koneksi!");
+        showError(error.message || "Terjadi kesalahan koneksi.");
 
         isSubmitting = false;
         submitButton.disabled = false;
