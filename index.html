@@ -586,168 +586,142 @@ button:hover{
 </div>
 
 <script>
-
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDFfQx4e0zRlJLlHf-cHogtEm78iadKn_aYTkR3j1PVbziIMJXBueBAIkoe49AZoNE4A/exec";
 
-const page1 = document.getElementById('page1');
-const page2 = document.getElementById('page2');
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
 
-const progressBar = document.getElementById('progressBar');
-const progressText = document.getElementById('progressText');
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
 
-function setProgress(value){
+const form = document.getElementById("cdaForm");
+const loadingBox = document.getElementById("loadingBox");
+const successBox = document.getElementById("successBox");
+const participantCode = document.getElementById("participantCode");
 
+const submitButton = document.querySelector(".btn-submit");
+
+const SUBMIT_LOCK_KEY = "cda_2026_submitted";
+const PARTICIPANT_ID_KEY = "cda_2026_participant_id";
+
+let isSubmitting = false;
+
+function setProgress(value) {
     progressBar.style.width = value + "%";
     progressText.innerText = value + "%";
-
 }
 
-function nextPage(){
-
+function nextPage() {
     const requiredInputs = page1.querySelectorAll("[required]");
 
-    for(const input of requiredInputs){
-
-        if(!input.checkValidity()){
-
+    for (const input of requiredInputs) {
+        if (!input.checkValidity()) {
             input.reportValidity();
             return;
-
         }
-
     }
 
-    page1.classList.remove('active');
-    page2.classList.add('active');
-
+    page1.classList.remove("active");
+    page2.classList.add("active");
     setProgress(100);
 
-    window.scrollTo({
-        top:0,
-        behavior:'smooth'
-    });
-
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function prevPage(){
-
-    page2.classList.remove('active');
-    page1.classList.add('active');
-
+function prevPage() {
+    page2.classList.remove("active");
+    page1.classList.add("active");
     setProgress(50);
 
-    window.scrollTo({
-        top:0,
-        behavior:'smooth'
-    });
-
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function generateParticipantID(){
-
+function generateParticipantID() {
     const random = Math.floor(Math.random() * 9000) + 1000;
-
     return `CDA-2026-${random}`;
-
 }
 
-document.getElementById('cdaForm').addEventListener('submit', async function(e){
+function showSuccess(id) {
+    form.style.display = "none";
+    loadingBox.style.display = "none";
+    successBox.style.display = "block";
+    participantCode.innerText = "ID Peserta: " + id;
+}
 
+window.addEventListener("DOMContentLoaded", function () {
+    const alreadySubmitted = localStorage.getItem(SUBMIT_LOCK_KEY);
+    const savedParticipantID = localStorage.getItem(PARTICIPANT_ID_KEY);
+
+    if (alreadySubmitted === "true" && savedParticipantID) {
+        showSuccess(savedParticipantID);
+    }
+});
+
+form.addEventListener("submit", async function (e) {
     e.preventDefault();
+
+    if (isSubmitting) return;
+
+    const alreadySubmitted = localStorage.getItem(SUBMIT_LOCK_KEY);
+
+    if (alreadySubmitted === "true") {
+        alert("Form sudah pernah dikirim dari perangkat ini.");
+        return;
+    }
+
+    isSubmitting = true;
+    submitButton.disabled = true;
+    submitButton.innerText = "Mengirim...";
 
     const participantID = generateParticipantID();
 
     const data = {
-
         participant_id: participantID,
-
-        gmail:
-            document.getElementById('gmail').value,
-
-        nama:
-            document.getElementById('nama').value,
-
-        kelas:
-            document.getElementById('kelas').value,
-
-        tanggal_lahir:
-            document.getElementById('tanggal_lahir').value,
-
-        alamat:
-            document.getElementById('alamat').value,
-
-        jenis_kelamin:
-            document.querySelector('input[name="jk"]:checked').value,
-
-        agama:
-            document.getElementById('agama').value,
-
-        hobi:
-            document.getElementById('hobi').value,
-
-        telepon:
-            document.getElementById('telepon').value,
-
-        instagram:
-            document.getElementById('instagram').value,
-
-        persetujuan:
-            document.querySelector('input[name="ortu"]:checked').value,
-
-        alasan:
-            document.getElementById('alasan').value,
-
-        visimisi:
-            document.getElementById('visimisi').value,
-
-        kesiapan:
-            document.getElementById('kesiapan').value
-
+        gmail: document.getElementById("gmail").value.trim(),
+        nama: document.getElementById("nama").value.trim(),
+        kelas: document.getElementById("kelas").value.trim(),
+        tanggal_lahir: document.getElementById("tanggal_lahir").value,
+        alamat: document.getElementById("alamat").value.trim(),
+        jenis_kelamin: document.querySelector('input[name="jk"]:checked').value,
+        agama: document.getElementById("agama").value.trim(),
+        hobi: document.getElementById("hobi").value.trim(),
+        telepon: document.getElementById("telepon").value.trim(),
+        instagram: document.getElementById("instagram").value.trim(),
+        persetujuan: document.querySelector('input[name="ortu"]:checked').value,
+        alasan: document.getElementById("alasan").value.trim(),
+        visimisi: document.getElementById("visimisi").value.trim(),
+        kesiapan: document.getElementById("kesiapan").value.trim()
     };
 
-    try{
+    try {
+        loadingBox.style.display = "block";
 
-        document.getElementById('loadingBox').style.display = "block";
-
-        const response = await fetch(GOOGLE_SCRIPT_URL,{
-
-            method:"POST",
-
-            body:JSON.stringify(data)
-
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(data)
         });
 
         const result = await response.json();
 
-        document.getElementById('loadingBox').style.display = "none";
+        if (result.status === "success") {
+            localStorage.setItem(SUBMIT_LOCK_KEY, "true");
+            localStorage.setItem(PARTICIPANT_ID_KEY, participantID);
 
-        if(result.status === "success"){
-
-            document.getElementById('cdaForm').style.display = "none";
-
-            document.getElementById('successBox').style.display = "block";
-
-            document.getElementById('participantCode').innerText =
-                "ID Peserta: " + participantID;
-
-        }else{
-
-            alert("Gagal mengirim data!");
-
+            showSuccess(participantID);
+        } else {
+            throw new Error("Server response bukan success");
         }
-
-    }catch(error){
-
+    } catch (error) {
         console.error(error);
 
-        document.getElementById('loadingBox').style.display = "none";
-
+        loadingBox.style.display = "none";
         alert("Terjadi kesalahan koneksi!");
 
+        isSubmitting = false;
+        submitButton.disabled = false;
+        submitButton.innerText = "Kirim Pendaftaran";
     }
-
 });
-
 </script>
 
 </body>
