@@ -10,9 +10,9 @@
 
 <style>
 :root{
-    --card:rgba(220,235,255,.16);
-    --input:rgba(255,255,255,.10);
-    --border:rgba(255,255,255,.18);
+    --card:rgba(15,23,42,.10);
+    --input:rgba(255,255,255,.045);
+    --border:rgba(255,255,255,.16);
     --blue:#38bdf8;
     --blue2:#0ea5e9;
     --white:#f8fbff;
@@ -48,18 +48,23 @@ body{
 }
 
 .top-card{
-    background:var(--card);
-    border:1px solid var(--border);
+    background:rgba(15,23,42,.10);
+    border:1px solid rgba(255,255,255,.18);
     border-radius:24px;
     overflow:hidden;
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 20px 80px rgba(0,0,0,.22),
+        inset 0 1px 0 rgba(255,255,255,.12);
+
+    backdrop-filter:blur(10px) saturate(150%);
+    -webkit-backdrop-filter:blur(10px) saturate(150%);
 }
 
 .header{
     padding:40px;
-    background:linear-gradient(135deg,rgba(56,189,248,.18),rgba(37,99,235,.22));
+    background:rgba(56,189,248,.045);
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .header h1{
@@ -80,10 +85,17 @@ body{
 }
 
 .info-box{
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.05);
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.14);
     border-radius:16px;
     padding:18px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        0 8px 26px rgba(0,0,0,.10);
+
+    backdrop-filter:blur(8px) saturate(150%);
+    -webkit-backdrop-filter:blur(8px) saturate(150%);
 }
 
 .info-box span{
@@ -109,7 +121,8 @@ body{
 .progress{
     width:100%;
     height:10px;
-    background:#1e293b;
+    background:rgba(15,23,42,.35);
+    border:1px solid rgba(255,255,255,.06);
     border-radius:999px;
     overflow:hidden;
 }
@@ -124,6 +137,7 @@ body{
 .form-section{
     padding:40px;
     display:none;
+    background:rgba(15,23,42,.035);
 }
 
 .form-section.active{
@@ -172,12 +186,21 @@ input,
 textarea{
     width:100%;
     outline:none;
-    background:rgba(255,255,255,.12);
-    border:1px solid rgba(255,255,255,.10);
+
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.18);
     color:white;
+
     padding:15px 16px;
     border-radius:14px;
     font-size:14px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        0 8px 22px rgba(0,0,0,.08);
+
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
 }
 
 input:focus,
@@ -203,11 +226,15 @@ textarea{
     display:flex;
     align-items:center;
     gap:10px;
-    background:var(--input);
+
+    background:rgba(255,255,255,.04);
     border-radius:14px;
     padding:15px;
-    border:1px solid transparent;
+    border:1px solid rgba(255,255,255,.14);
     cursor:pointer;
+
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
 }
 
 .radio-item:hover{
@@ -299,13 +326,16 @@ button:disabled{
 .answer-box{
     margin:22px auto 0;
     max-width:560px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.16);
     border-radius:18px;
     padding:18px 20px;
     color:var(--gray);
     font-size:14px;
     line-height:1.8;
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
 }
 
 .error-box{
